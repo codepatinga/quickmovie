@@ -13,7 +13,7 @@ def get_movie_recommendation(genre_name):
         if movies_response["results"]:
             movie = random.choice(movies_response["results"])
             release_year = movie['release_date'].split("-")[0] if 'release_date' in movie and movie['release_date'] else "Unknown release year"
-            st.write(f"Recommended movie: {movie['title']} ({release_year}) with TMDb rating: {movie['vote_average']}")
+            st.write(f"Recommended movie: {movie['title']} ({release_year}) with TMDB rating: {movie['vote_average']}")
             poster_path = movie['poster_path']
             if poster_path:
                 st.image(f"https://image.tmdb.org/t/p/w500{poster_path}", caption=movie['title'])
