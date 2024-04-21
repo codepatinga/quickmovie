@@ -25,7 +25,7 @@ def get_movie_recommendation(genre_name):
     else:
         st.write("Invalid genre name.")
 
-st.image("https://github.com/codepatinga/quickmovie/blob/main/logo.png?raw=true")
+st.image("https://github.com/codepatinga/quickmovie/blob/main/logo.png?raw=true", width=300)
 st.title('Quick Movie Recommendation System')
 genre_name = st.text_input("Enter a genre: ")
 if st.button('Get Recommendation'):
