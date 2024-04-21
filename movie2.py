@@ -9,7 +9,7 @@ def get_movie_recommendation(genre_name):
     genre_id = next((genre["id"] for genre in genres_response["genres"] if genre["name"].lower() == genre_name.lower()), None)
     
     if genre_id:
-        movies_response = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={genre_id}&vote_average.gte=6.5&language=en-US").json()
+        movies_response = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={genre_id}&vote_average.gte=5&language=en-US").json()
         if movies_response["results"]:
             movie = random.choice(movies_response["results"])
             release_year = movie['release_date'].split("-")[0] if 'release_date' in movie and movie['release_date'] else "Unknown release year"
@@ -25,7 +25,8 @@ def get_movie_recommendation(genre_name):
     else:
         st.write("Invalid genre name.")
 
-st.title('Movie Recommendation System')
+st.image("https://github.com/codepatinga/quickmovie/blob/main/logo.png")
+st.title('Quick Movie Recommendation System')
 genre_name = st.text_input("Enter a genre: ")
 if st.button('Get Recommendation'):
     get_movie_recommendation(genre_name)
