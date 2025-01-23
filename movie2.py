@@ -45,8 +45,8 @@ def show_random_movie():
     poster_image = get_movie_poster_from_letterboxd(letterboxd_url)
 
     # Display movie info
-    st.header(f"Title: {movie_title}")
-    st.subheader(f"Year: {movie['year']}")
+    st.header(f"{movie_title}")
+    st.subheader(f"{movie['year']}")
     
     if poster_image:
         st.image(poster_image, use_container_width=True)
