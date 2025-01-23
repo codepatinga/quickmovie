@@ -1,33 +1,33 @@
 import streamlit as st
 import pandas as pd
 import random
-import wikipedia
 import requests
+from bs4 import BeautifulSoup
 from io import BytesIO
 from PIL import Image
 
-# Function to get a movie's poster from Wikipedia
-def get_movie_poster(movie_title):
+# Function to get movie poster from Letterboxd URL
+def get_movie_poster_from_letterboxd(letterboxd_url):
     try:
-        # Search for the movie on Wikipedia
-        search_result = wikipedia.search(movie_title)
-        if search_result:
-            # Get the first result (most likely to be the correct article)
-            page = wikipedia.page(search_result[0])
-            # Look for the image in the page content
-            image_url = None
-            for img in page.images:
-                if img.endswith('.jpg') or img.endswith('.png'):
-                    image_url = img
-                    break
+        # Fetch the Letterboxd page content
+        response = requests.get(letterboxd_url)
+        response.raise_for_status()  # Ensure the request was successful
+
+        # Parse the HTML content with BeautifulSoup
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        # Find the poster image by looking for the <meta> tag for the movie poster
+        meta_image_tag = soup.find('meta', property='og:image')
+        if meta_image_tag:
+            image_url = meta_image_tag.get('content')
             if image_url:
                 # Download the image
-                response = requests.get(image_url)
-                img = Image.open(BytesIO(response.content))
+                img_response = requests.get(image_url)
+                img = Image.open(BytesIO(img_response.content))
                 return img
         return None
-    except wikipedia.exceptions.DisambiguationError as e:
-        st.error(f"Ambiguous search result: {e.options}")
+    except requests.exceptions.RequestException as e:
+        st.error(f"Error fetching Letterboxd page: {e}")
     except Exception as e:
         st.error(f"Error fetching poster: {e}")
 
@@ -41,8 +41,8 @@ def show_random_movie():
     movie_title = movie['title']
     letterboxd_url = movie['letterboxd_url']
 
-    # Get movie poster from Wikipedia
-    poster_image = get_movie_poster(movie_title)
+    # Get movie poster from Letterboxd URL
+    poster_image = get_movie_poster_from_letterboxd(letterboxd_url)
 
     # Display movie info
     st.title("Random Movie Picker")
