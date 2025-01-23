@@ -16,15 +16,11 @@ def get_movie_poster_from_letterboxd(letterboxd_url):
         # Parse the HTML content with BeautifulSoup
         soup = BeautifulSoup(response.text, 'html.parser')
 
-         # Find the image tag with the class "image"
-        image_tag = soup.find('img', class_='image')
-        if image_tag:
-            image_url = image_tag.get('src')
+        # Find the poster image by looking for the <meta> tag for the movie poster
+        meta_image_tag = soup.find('meta', property='og:image')
+        if meta_image_tag:
+            image_url = meta_image_tag.get('content')
             if image_url:
-                # Make sure the URL is absolute (some websites may use relative paths)
-                if not image_url.startswith('http'):
-                    image_url = f"https:{image_url}"
-
                 # Download the image
                 img_response = requests.get(image_url)
                 img = Image.open(BytesIO(img_response.content))
