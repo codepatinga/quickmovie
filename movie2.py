@@ -45,7 +45,6 @@ def show_random_movie():
     poster_image = get_movie_poster_from_letterboxd(letterboxd_url)
 
     # Display movie info
-    st.title("Quick Movie Recommendation System")
     st.header(f"Title: {movie_title}")
     st.subheader(f"Year: {movie['year']}")
     
