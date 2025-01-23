@@ -50,7 +50,7 @@ def show_random_movie():
     st.subheader(f"Year: {movie['year']}")
     
     if poster_image:
-        st.image(poster_image, caption=f"{movie_title} Poster", use_container_width=True)
+        st.image(poster_image, use_container_width=True)
     else:
         st.write("Poster not found.")
 
