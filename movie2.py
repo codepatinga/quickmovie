@@ -5,7 +5,7 @@ import urllib.parse
 import os
 
 # Fetch API key from environment variable for better security
-api_key = os.getenv('OMDB_API_KEY', 'YOUR_DEFAULT_API_KEY')  # Replace with your OMDb API key
+api_key = os.getenv('OMDB_API_KEY', '66d5d104')  # Replace with your OMDb API key
 
 # Function to get a random movie from a specific decade
 def get_random_movie_from_decade(decade):
