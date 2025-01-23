@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import random
-import wikipedia-api as wikipedia
+import wikipedia
 import requests
 from io import BytesIO
 from PIL import Image
