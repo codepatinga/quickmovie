@@ -62,4 +62,21 @@ def get_wikipedia_poster(movie_title):
     return None
 
 # Streamlit interface
-st.image(
+st.image("https://github.com/codepatinga/quickmovie/blob/main/logo.png?raw=true", width=300)
+st.title('Quick Movie Recommendation System (Select a Decade)')
+
+# Dropdown for user to select decade
+decades = [1960, 1970, 1980, 1990, 2000, 2010, 2020]
+selected_decade = st.selectbox("Select a Decade", decades)
+
+# Button to fetch movie recommendation
+if st.button('Get Movie Recommendation'):
+    movie_data = get_random_movie_from_decade(selected_decade)
+    
+    if movie_data:
+        st.write(f"### {movie_data['title']} ({movie_data['year']}) - IMDb Rating: {movie_data['rating']}")
+        if movie_data['poster'] and movie_data['poster'] != 'N/A':
+            st.image(movie_data['poster'], caption=movie_data['title'])
+        st.markdown(f"[More Info on IMDb]({movie_data['url']})", unsafe_allow_html=True)
+    else:
+        st.write("No movie found for this decade.")
